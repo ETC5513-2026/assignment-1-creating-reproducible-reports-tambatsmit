@@ -1,11 +1,176 @@
 ---
-title: "Assignment 1"
+title: "Does Marketing Spend Drive Purchase Amounts?"
+subtitle: "An Analysis of a Personalised Marketing Campaign"
+date: today
 author: "Smit Tambat_36881880"
 format: 
   html:
-    theme: cosmo 
-pdf: default
+    theme: cosmo
+  pdf: default
 editor: visual
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(lubridate)
+```
+
+------------------------------------------------------------------------
+
 # Introduction
+
+Personalised marketing campaigns are central to the growth strategy of online retailers, yet the return on such campaigns is not always clear. Over the last quarter, our company invested varying amounts of marketing spend across individual customers through ads, emails, and coupons. Understanding whether this spending translated into higher customer purchases is essential for guiding future budget allocation. This report investigates the relationship between per-customer marketing spend and purchase amounts to determine whether the campaign delivered a meaningful return.
+
+# Research Question
+
+The specific question this report aims to answer is: **did higher marketing spend per customer lead to higher purchase amounts?** By examining the association between these two variables across customer segments, we can determine whether increasing marketing investment is justified. This analysis will help inform future campaign strategies and resource allocation decisions.
+
+# Dataset Description
+
+The dataset records individual-level outcomes from our most recent personalised marketing campaign, covering 150 customers. Each record captures the customer identifier, signup date, the amount of marketing spend directed at that customer, the number of website visits, the resulting purchase amount, the customer segment, and any follow-up notes. The data includes customers from three segments: Consumer, SMB (Small and Medium Business), and Enterprise. Some records contain missing values for `purchase_amount` and `signup_date`, as well as inconsistent date formats, which required cleaning before analysis. The `notes` column contains free-text annotations such as "returned" or "contacted" and is not used in this analysis.
+
+```{r}
+#| label: data-loading-and-cleaning
+#| include: false
+
+# Read the raw dataset
+raw_data <- read.csv("data/36881880_Smit Tambat.csv")
+
+# Clean the dataset
+campaign_data <- raw_data |>
+  # Parse the inconsistent date formats into a single Date column
+  mutate(
+    signup_date = parse_date_time(
+      signup_date,
+      orders = c("ymd", "dmy", "mdy", "Bdy"),
+      quiet = TRUE
+    ),
+    signup_date = as.Date(signup_date)
+  ) |>
+  # Remove rows where purchase_amount is missing (NA)
+  filter(!is.na(purchase_amount)) |>
+  # Remove the notes column as it is not needed for analysis
+  select(-notes)
+```
+
+To prepare the data for analysis, several cleaning steps were performed. First, the `signup_date` column contained dates in multiple formats (such as `2025-07-20`, `22/06/2025`, and `Nov 13, 2024`), so these were standardised into a single date format using the `lubridate` package. Second, rows with missing `purchase_amount` values were removed, as this is the primary outcome variable and imputation would not be appropriate. Finally, the `notes` column was dropped as it contained unstructured text not relevant to the research question.
+
+## Summary of the Cleaned Data
+
+After cleaning, the dataset contains `r nrow(campaign_data)` observations and `r ncol(campaign_data)` variables. The variables include `customer_id` (character), `signup_date` (date), `marketing_spend` (numeric, in dollars), `visits` (integer, number of site visits), `purchase_amount` (numeric, in dollars), and `segment` (categorical with three levels). @tbl-summary presents the summary statistics for the key numeric variables, grouped by customer segment.
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics of marketing spend and purchase amount by customer segment."
+
+campaign_data |>
+  group_by(segment) |>
+  summarise(
+    n = n(),
+    mean_spend = round(mean(marketing_spend), 2),
+    median_spend = round(median(marketing_spend), 2),
+    mean_purchase = round(mean(purchase_amount), 2),
+    median_purchase = round(median(purchase_amount), 2),
+    .groups = "drop"
+  ) |>
+  kable(
+    col.names = c(
+      "Segment", "Count", "Mean Spend ($)",
+      "Median Spend ($)", "Mean Purchase ($)", "Median Purchase ($)"
+    ),
+    align = "lrrrrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+@fig-segment-distribution shows the distribution of customers across the three segments. The majority of customers belong to the Consumer segment, followed by SMB and Enterprise. This reflects the typical composition of an online retailer's customer base.
+
+```{r}
+#| label: fig-segment-distribution
+#| fig-cap: "Distribution of customers across the three segments in the cleaned dataset."
+#| fig-width: 6
+#| fig-height: 4
+
+campaign_data |>
+  count(segment) |>
+  ggplot(aes(x = reorder(segment, -n), y = n, fill = segment)) +
+  geom_col(width = 0.6) +
+  geom_text(aes(label = n), vjust = -0.5, size = 3.5) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x = "Customer Segment",
+    y = "Number of Customers"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+# Results
+
+```{r}
+#| label: correlation-calculation
+#| include: false
+
+cor_value <- cor(
+  campaign_data$marketing_spend,
+  campaign_data$purchase_amount,
+  use = "complete.obs"
+)
+cor_value_rounded <- round(cor_value, 2)
+```
+
+To investigate whether higher marketing spend leads to higher purchase amounts, we examine the relationship between these two variables visually and numerically. The overall Pearson correlation coefficient between `marketing_spend` and `purchase_amount` is `r cor_value_rounded`, suggesting a `r ifelse(cor_value_rounded > 0.5, "strong", ifelse(cor_value_rounded > 0.3, "moderate", "weak"))` positive association.
+
+@fig-scatter-overall displays the relationship between marketing spend and purchase amount across all customers, with a linear trend line. There is a clear upward trend: customers who received higher marketing spend tended to make larger purchases. While there is notable variability, the general direction of the relationship supports a positive link between investment and return.
+
+```{r}
+#| label: fig-scatter-overall
+#| fig-cap: "Scatter plot of marketing spend versus purchase amount with a linear trend line. Each point represents one customer."
+#| fig-width: 7
+#| fig-height: 5
+
+ggplot(campaign_data, aes(x = marketing_spend, y = purchase_amount)) +
+  geom_point(alpha = 0.6, colour = "#2c7bb6", size = 2) +
+  geom_smooth(method = "lm", se = TRUE, colour = "#d7191c", linewidth = 1) +
+  labs(
+    x = "Marketing Spend ($)",
+    y = "Purchase Amount ($)"
+  ) +
+  theme_minimal()
+```
+
+@fig-scatter-segment breaks this relationship down by customer segment. The positive trend holds across all three segments, though the strength and spread differ. Enterprise customers show a tighter clustering, while Consumer customers exhibit more variability. This suggests that while the overall campaign was effective, the return on spend may vary by customer type.
+
+```{r}
+#| label: fig-scatter-segment
+#| fig-cap: "Scatter plot of marketing spend versus purchase amount, faceted by customer segment, with individual trend lines."
+#| fig-width: 8
+#| fig-height: 4
+
+ggplot(campaign_data, aes(x = marketing_spend, y = purchase_amount, colour = segment)) +
+  geom_point(alpha = 0.6, size = 2) +
+  geom_smooth(method = "lm", se = TRUE, linewidth = 0.8) +
+  scale_colour_brewer(palette = "Set2") +
+  facet_wrap(~segment) +
+  labs(
+    x = "Marketing Spend ($)",
+    y = "Purchase Amount ($)",
+    colour = "Segment"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Overall, the evidence from this analysis indicates that higher marketing spend per customer is associated with higher purchase amounts. The correlation of `r cor_value_rounded` and the consistent upward trends in @fig-scatter-overall and @fig-scatter-segment both support this conclusion. While this observational analysis cannot establish causation, the findings provide a strong basis for continuing personalised marketing investment in future campaigns, with particular attention to optimising spend across different customer segments.

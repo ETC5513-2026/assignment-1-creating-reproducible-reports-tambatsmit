@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Smit Tambat_36881880">
+<meta name="author" content="Smit Tambat">
 <meta name="dcterms.date" content="2026-04-15">
 
-<title>Does Marketing Spend Drive Purchase Amounts?</title>
+<title>Appendix: AI Usage Declaration</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -28,21 +28,17 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="report_files/libs/clipboard/clipboard.min.js"></script>
-<script src="report_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="report_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="report_files/libs/quarto-html/popper.min.js"></script>
-<script src="report_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="report_files/libs/quarto-html/anchor.min.js"></script>
-<link href="report_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="report_files/libs/quarto-html/quarto-syntax-highlighting-7c69b197886ae2a34062761d21e44731.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="report_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="report_files/libs/bootstrap/bootstrap-67270d1595a62d14f123c043d4fb2f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="report_files/libs/kePrint-0.0.1/kePrint.js"></script>
-
-<link href="report_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
+<script src="appendix_files/libs/clipboard/clipboard.min.js"></script>
+<script src="appendix_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="appendix_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="appendix_files/libs/quarto-html/popper.min.js"></script>
+<script src="appendix_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="appendix_files/libs/quarto-html/anchor.min.js"></script>
+<link href="appendix_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="appendix_files/libs/quarto-html/quarto-syntax-highlighting-7c69b197886ae2a34062761d21e44731.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="appendix_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="appendix_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="appendix_files/libs/bootstrap/bootstrap-67270d1595a62d14f123c043d4fb2f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -51,13 +47,12 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="appendix.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Does Marketing Spend Drive Purchase Amounts?</h1>
-<p class="subtitle lead">An Analysis of a Personalised Marketing Campaign</p>
+<h1 class="title">Appendix: AI Usage Declaration</h1>
 </div>
 
 
@@ -67,7 +62,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Smit Tambat_36881880 </p>
+             <p>Smit Tambat </p>
           </div>
   </div>
     
@@ -86,124 +81,17 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<hr>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Personalised marketing campaigns are central to the growth strategy of online retailers, yet the return on such campaigns is not always clear. Over the last quarter, our company invested varying amounts of marketing spend across individual customers through ads, emails, and coupons. Understanding whether this spending translated into higher customer purchases is essential for guiding future budget allocation. This report investigates the relationship between per-customer marketing spend and purchase amounts to determine whether the campaign delivered a meaningful return.</p>
-</section>
-<section id="research-question" class="level1">
-<h1>Research Question</h1>
-<p>The specific question this report aims to answer is: <strong>did higher marketing spend per customer lead to higher purchase amounts?</strong> By examining the association between these two variables across customer segments, we can determine whether increasing marketing investment is justified. This analysis will help inform future campaign strategies and resource allocation decisions.</p>
-</section>
-<section id="dataset-description" class="level1">
-<h1>Dataset Description</h1>
-<p>The dataset records individual-level outcomes from our most recent personalised marketing campaign, covering 150 customers. Each record captures the customer identifier, signup date, the amount of marketing spend directed at that customer, the number of website visits, the resulting purchase amount, the customer segment, and any follow-up notes. The data includes customers from three segments: Consumer, SMB (Small and Medium Business), and Enterprise. Some records contain missing values for <code>purchase_amount</code> and <code>signup_date</code>, as well as inconsistent date formats, which required cleaning before analysis. The <code>notes</code> column contains free-text annotations such as “returned” or “contacted” and is not used in this analysis.</p>
-<p>To prepare the data for analysis, several cleaning steps were performed. First, the <code>signup_date</code> column contained dates in multiple formats (such as <code>2025-07-20</code>, <code>22/06/2025</code>, and <code>Nov 13, 2024</code>), so these were standardised into a single date format using the <code>lubridate</code> package. Second, rows with missing <code>purchase_amount</code> values were removed, as this is the primary outcome variable and imputation would not be appropriate. Finally, the <code>notes</code> column was dropped as it contained unstructured text not relevant to the research question.</p>
-<section id="summary-of-the-cleaned-data" class="level2">
-<h2 class="anchored" data-anchor-id="summary-of-the-cleaned-data">Summary of the Cleaned Data</h2>
-<p>After cleaning, the dataset contains 132 observations and 6 variables. The variables include <code>customer_id</code> (character), <code>signup_date</code> (date), <code>marketing_spend</code> (numeric, in dollars), <code>visits</code> (integer, number of site visits), <code>purchase_amount</code> (numeric, in dollars), and <code>segment</code> (categorical with three levels). <a href="#tbl-summary" class="quarto-xref">Table&nbsp;1</a> presents the summary statistics for the key numeric variables, grouped by customer segment.</p>
-<div class="cell">
-<div id="tbl-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Summary statistics of marketing spend and purchase amount by customer segment.
-</figcaption>
-<div aria-describedby="tbl-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Segment</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Spend ($)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Median Spend ($)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Purchase ($)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Median Purchase ($)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Consumer</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">137.47</td>
-<td style="text-align: right;">131.74</td>
-<td style="text-align: right;">148.44</td>
-<td style="text-align: right;">150.80</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Enterprise</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">185.56</td>
-<td style="text-align: right;">223.40</td>
-<td style="text-align: right;">198.10</td>
-<td style="text-align: right;">225.96</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SMB</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: right;">99.10</td>
-<td style="text-align: right;">88.13</td>
-<td style="text-align: right;">130.68</td>
-<td style="text-align: right;">123.07</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<p><a href="#fig-segment-distribution" class="quarto-xref">Figure&nbsp;1</a> shows the distribution of customers across the three segments. The majority of customers belong to the Consumer segment, followed by SMB and Enterprise. This reflects the typical composition of an online retailer’s customer base.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-segment-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-segment-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="report_files/figure-html/fig-segment-distribution-1.png" class="img-fluid figure-img" width="576">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-segment-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Distribution of customers across the three segments in the cleaned dataset.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="results" class="level1">
-<h1>Results</h1>
-<p>To investigate whether higher marketing spend leads to higher purchase amounts, we examine the relationship between these two variables visually and numerically. The overall Pearson correlation coefficient between <code>marketing_spend</code> and <code>purchase_amount</code> is 0.88, suggesting a strong positive association.</p>
-<p><a href="#fig-scatter-overall" class="quarto-xref">Figure&nbsp;2</a> displays the relationship between marketing spend and purchase amount across all customers, with a linear trend line. There is a clear upward trend: customers who received higher marketing spend tended to make larger purchases. While there is notable variability, the general direction of the relationship supports a positive link between investment and return.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-scatter-overall" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-scatter-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="report_files/figure-html/fig-scatter-overall-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Scatter plot of marketing spend versus purchase amount with a linear trend line. Each point represents one customer.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p><a href="#fig-scatter-segment" class="quarto-xref">Figure&nbsp;3</a> breaks this relationship down by customer segment. The positive trend holds across all three segments, though the strength and spread differ. Enterprise customers show a tighter clustering, while Consumer customers exhibit more variability. This suggests that while the overall campaign was effective, the return on spend may vary by customer type.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-scatter-segment" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-scatter-segment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="report_files/figure-html/fig-scatter-segment-1.png" class="img-fluid figure-img" width="768">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-segment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Scatter plot of marketing spend versus purchase amount, faceted by customer segment, with individual trend lines.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Overall, the evidence from this analysis indicates that higher marketing spend per customer is associated with higher purchase amounts. The correlation of 0.88 and the consistent upward trends in <a href="#fig-scatter-overall" class="quarto-xref">Figure&nbsp;2</a> and <a href="#fig-scatter-segment" class="quarto-xref">Figure&nbsp;3</a> both support this conclusion. While this observational analysis cannot establish causation, the findings provide a strong basis for continuing personalised marketing investment in future campaigns, with particular attention to optimising spend across different customer segments.</p>
+<section id="ai-usage-declaration" class="level1">
+<h1>AI Usage Declaration</h1>
+<p>In accordance with <u>Monash University</u>’s policy on the responsible use of AI, I declare that I used Generative AI (ChatGPT by OpenAI) to assist with the following aspects of this assignment:</p>
+<ul>
+<li><p><strong>Quarto document setup and formatting:</strong> I asked for guidance on structuring the Quarto report, including generating both HTML and PDF outputs, using inline R code, and adding captions and cross-references for tables and figures.</p></li>
+<li><p><strong>R coding support and data analysis workflow:</strong> I used AI assistance to understand beginner-friendly R code for loading, inspecting, and cleaning the dataset, as well as creating summary tables and visualisations using tidyverse and ggplot2.</p></li>
+<li><p><strong>Data visualisation improvements:</strong> I asked for help customising charts, including scatter plots with trend lines, faceting by customer segment, handling overlapping points with transparency, and selecting professional colour palettes in ggplot.</p></li>
+<li><p><strong>Academic writing and proofreading:</strong> I used AI to review and improve the grammar, clarity, and phrasing of report paragraphs, including the introduction, data cleaning description, findings, conclusion, and interpretation of results.</p></li>
+</ul>
+<p>The chat link of the relevant AI interactions is attached below-</p>
+<p><a href="https://chatgpt.com/share/69df862f-790c-8321-bd50-0dd5deb7c650">Prompt</a></p>
 </section>
 
 </main>

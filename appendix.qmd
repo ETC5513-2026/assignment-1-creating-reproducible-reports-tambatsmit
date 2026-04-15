@@ -1,0 +1,25 @@
+---
+title: "Appendix: AI Usage Declaration"
+author: "Smit Tambat"
+date: today
+format:
+  html:
+    theme: cosmo
+  pdf: default
+---
+
+# AI Usage Declaration
+
+In accordance with [Monash University]{.underline}'s policy on the responsible use of AI, I declare that I used Generative AI (ChatGPT by OpenAI) to assist with the following aspects of this assignment:
+
+-    **Quarto document setup and formatting:** I asked for guidance on structuring the Quarto report, including generating both HTML and PDF outputs, using inline R code, and adding captions and cross-references for tables and figures.
+
+-    **R coding support and data analysis workflow:** I used AI assistance to understand beginner-friendly R code for loading, inspecting, and cleaning the dataset, as well as creating summary tables and visualisations using tidyverse and ggplot2.
+
+-    **Data visualisation improvements:** I asked for help customising charts, including scatter plots with trend lines, faceting by customer segment, handling overlapping points with transparency, and selecting professional colour palettes in ggplot.
+
+-    **Academic writing and proofreading:** I used AI to review and improve the grammar, clarity, and phrasing of report paragraphs, including the introduction, data cleaning description, findings, conclusion, and interpretation of results.
+
+The chat link of the relevant AI interactions is attached below-
+
+[Prompt](https://chatgpt.com/share/69df862f-790c-8321-bd50-0dd5deb7c650)

@@ -1,0 +1,11 @@
+---
+title: "Assignment 1"
+author: "Smit Tambat_36881880"
+format: 
+  html:
+    theme: cosmo 
+pdf: default
+editor: visual
+---
+
+# Introduction
